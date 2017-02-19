@@ -1,7 +1,7 @@
 import re, math
 import textblob.tokenizers as tt
 
-import profanity.profanity as pf
+from profanity import profanity
 
 from textblob import TextBlob
 from textstat.textstat import textstat as ts
@@ -91,7 +91,7 @@ class nlp_optimized:
         length = float(len(self.__tokenized_text))
         prof = 0
         for word in self.__tokenized_text:
-            if pf.contains_profanity(word):
+            if profanity.contains_profanity(word):
                 prof += 1
         return [prof, prof/length]
 

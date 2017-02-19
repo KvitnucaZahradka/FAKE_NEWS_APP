@@ -27,9 +27,14 @@ class predict:
 
 
     def predict(self):
-        res = self.__model.predict(self.__create_x())
+        # res = self.__model.predict(self.__create_x())
+        res = self.__model.predict_proba(self.__create_x())
+        print(res[0])
+        print(self.__create_x())
 
-        if res == 1:
-            return 'not a fake'
+        if res[0][0]>=0.6:
+            return 'fake with probability ' + str(res[0][0])
+        elif res[0][0]<=0.4:
+            return 'true with probability ' + str(res[0][1])
         else:
-            return 'fake'
+            return 'inconclusive, fake with probability ' + str(res[0][0]) + ', true with probability ' + str(res[0][1])

@@ -14,16 +14,23 @@ def model_it(text_to_analyse, url_to_analyse, golden_fake_vector, golden_true_ve
 
         url_dict = url.get_url_dictionary()
 
-        # print(url_dict)
+
 
         # here you add a nlp "dictionary". I am doing that to have as a result the same structures
         nlp_dic[list(nlp_dic.keys())[0]].extend(list(url_dict.values())[0])
 
-        # print(nlp_dic)
+        print(nlp_dic)
 
         predicted = predict.predict(nlp_dic, model, pandas)
-        res = predicted.predict()
 
+        # appending the nlp_dic
+
+        res = [predicted.predict()]
+
+
+        res.extend([str(z) for z in nlp_dic['result']])
+
+        print(res)
         return res
     else:
         return 'check your input'

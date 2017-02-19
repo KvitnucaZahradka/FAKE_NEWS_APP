@@ -6,31 +6,86 @@
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <meta name="description" content="">
    <meta name="author" content="">
-   <link rel="icon" href="../../favicon.ico">
 
-   <title>Starter Template for Bootstrap</title>
+
+   <title>crown_lies</title>
 
    <!-- Bootstrap core CSS -->
    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
    <!-- Custom styles for this template -->
-   <link href="starter-template.css" rel="stylesheet">
+   <link href="../static/css/starter-template.css" rel="stylesheet">
 
-   <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-   <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-   <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+     <!-- APP js -->
+    <script src="../static/js/d3.v3.min.js" charset="utf-8"></script>
+     <script src="../static/js/d3tip.js"></script>
 
-   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-   <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+     <style>
+        .bar {
+            fill: steelblue;
+        }
 
-   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-   <!--[if lt IE 9]>
-     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-   <![endif]-->
- </head>
+        .bar:hover {
+            fill: brown;
+        }
+
+        .title {
+            font: bold 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        .axis {
+            font: 10px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+        fill: none;
+            stroke: #000;
+        shape-rendering: crispEdges;
+        }
+
+        .x.axis path {
+            display: none;
+        }
+
+         .d3-tip {
+            line-height: 1;
+            font-weight: bold;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.8);
+             color: #fff;
+             border-radius: 2px;
+         }
+
+         /* Creates a small triangle extender for the tooltip */
+        .d3-tip:after {
+            box-sizing: border-box;
+            display: inline;
+            font-size: 10px;
+            width: 100%;
+            line-height: 1;
+            color: rgba(0, 0, 0, 0.8);
+            content: "\25BC";
+            position: relative;
+            text-align: center;
+            }
+
+        /* Style northward tooltips differently */
+.       d3-tip.n:after {
+         margin: -1px 0 0 0;
+         top: 100%;
+         left: 0;
+        }
+
+    </style>
+
+    </head>
+
+
+
 
  <body>
+
 
    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
      <div class="container">
@@ -41,86 +96,207 @@
            <span class="icon-bar"></span>
            <span class="icon-bar"></span>
          </button>
-         <a class="navbar-brand" href="#">Project name</a>
+         <a class="navbar-brand" href="index">}crown_lies{</a>
        </div>
        <div class="collapse navbar-collapse">
          <ul class="nav navbar-nav">
-           <li class="active"><a href="#">Home</a></li>
-           <li><a href="#about">About</a></li>
-           <li><a href="#contact">Contact</a></li>
+           <!-- <li class="active"><a href="#">Home</a></li> -->
+           <li><a href="about">{about}</a></li>
+           <li><a href="contact">{contact}</a></li>
+             <li><a href="examples">{examples}</a></li>
+             <li><a href="about_model">{about model}</a></li>
          </ul>
        </div><!--/.nav-collapse -->
      </div>
    </div>
 <br><br>
+
    <div class="container">
-    <div class="starter-template">
-        <h2>Output Page</h2>
-        <p>Enter some user input</p>
+
+       <div class="starter-template">
+        <h2>TO BE { fake } OR NOT TO BE?</h2>
     </div>
 
-    <div class = "container">
+    <div class = "starter-template">
 
-      <form  action="/output" method="GET">
+      <form  action= "/output" method="GET">
+          <div class="form-group">
+            <label for="url_of_article"> URL </label>
+            <input type="text" id="url_of_article" name='url_of_article' placeholder="another_doubtful_url">
+          </div>
 
-       <div class="form-group">
-          <label for="text_of_article">Put URL of Article here:</label>
-          <input type="text" id="url_of_article" name='url_of_article' placeholder="e.g. ">
-       </div>
-
-        <div class="form-group">
-          <label for="text_of_article">Text Of Article:</label>
-          <input type="text" id="text_of_article" name='text_of_article' placeholder="e.g. ">
-        </div>
+          <div class="form-group">
+              <label for="text_of_article"> TEXT OF ARTICLE </label>
+              <input type="text" id="text_of_article" name='text_of_article' placeholder="another_doubtful_text">
+          </div>
 
         <div>
-          <button type="submit" class="btn btn-default btn-lg">Find fake vs. true!</button>
+          <button type="submit" class="btn btn-default btn-lg">FAKE \ TRUE</button>
         </div>
       </form>
     </div>
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+       <div class="starter-template">
+        {% if mu0 %}
+           <h3>MODEL PREDICTS ARTICLE TO BE</h3>
+            <p class="lead">{ {{the_result}} }</p>
+           {% elif the_result %}
+           <h3>ERROR</h3>
+            <p class="lead">{ {{the_result}} }</p>
+           {% else %}
+           <h3>MODEL PREDICTS ARTICLE TO BE</h3>
+            <p class="lead">{ {{the_result}} }</p>
+           {% endif %}
+      </div>
+
+
+
+    {% if mu0 %}
+
+        <div class = "starter-template">
+            <div id="plot">
+            </div>
+
+            <div id="point-info">
+                Click or  on a point.
+            </div>
+        </div>
+
+       <div id="info" class = "starter-template">
+
+       </div>
+
+       <script>
+
+           var margin = {top: 80, right: 180, bottom: 80, left: 180}, 
+               width = 960 - margin.left - margin.right, 
+               height = 500 - margin.top - margin.bottom;
+
+           var x = d3.scale.ordinal()
+               .rangeRoundBands([0, width], .1, .3);
+
+    var y = d3.scale.linear()
+        .range([height, 0]);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(8, "log(value + 1)");
+
+    var tip = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+            return "<strong>Value:</strong> <span style='color:red'>" + numFormat(d.z) +  "</span>";
+        })
+
+
+    var svg = d3.select("#plot").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    svg.call(tip);
+
+    // Format the numbers
+    var numFormat = d3.format(".2f")
+
+    // Show info
+    var show_info = function (d) {
+            d3.select("#point-info").text("Data: " + d._id + ", "
+                + "with value: " + numFormat(d.z) + ", " + " influence: " + d.inf);
+        };
+
+
+
+    d3.json("/gdata?mu0={{mu0}}&mu1={{mu1}}&mu2={{mu2}}&mu3={{mu3}}&mu4={{mu4}}&mu5={{mu5}}&mu6={{mu6}}&mu7={{mu7}}" +
+        "&mu8={{mu8}}&mu9={{mu9}}&mu10={{mu10}}&mu11={{mu11}}&mu12={{mu12}}", function(error, data) {
+        x.domain(data.map(function(d) { return d.x; }));
+        y.domain([0, d3.max(data, function(d) { return d.y; })]);
+
+    svg.append("text")
+      .attr("class", "title")
+      .attr("x", x(data[0].x))
+      .attr("y", -26)
+      .text("Why was text flagged as: {{the_result}}" );
+
+    svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+        .selectAll(".tick text")
+      .call(wrap, x.rangeBand());
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .text("Value");
+
+    svg.selectAll(".bar")
+        .data(data)
+        .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", function(d) { return x(d.x); })
+            .attr("width", x.rangeBand())
+            .attr("y", function(d) { return y(d.y); })
+            .attr("height", function(d) { return (height - y(d.y)); })
+            .on("mousedown", show_info)
+            .on("mouseover", show_info)
+            .on('mouseover', tip.show)
+            .on('mouseout', tip.hide);
+        });
+
+    function wrap(text, width) {
+    text.each(function() {
+        var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            y = text.attr("y"),
+            dy = parseFloat(text.attr("dy")),
+            tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+        line.push(word);
+        tspan.text(line.join(" "));
+        if (tspan.node().getComputedTextLength() > width) {
+            line.pop();
+            tspan.text(line.join(" "));
+            line = [word];
+            tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+        }
+        }
+    });
+    }
+
+        function type(d) {
+            d.value = +d.value;
+            return d;
+        }
+    </script>
+
+
+    {% endif %}
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
 
-  </div> <!-- /.container-->
-
-   <!--
-    <div class="container">
-      <div class="starter-template">
-        <h3>Results:</h3>
-        <p class="lead">Below is the result of your query.<br> You just took user input and looked up the information.</p>
-      </div>
+     </div>
 
 
-      <table class="table table-hover">
-      <tr><th>index</th><th>Attendant</th><th>Birth Month</th></tr>
-      {% for birth in births %}
-      <tr><td>{{ birth['index'] }}</td><td>{{ birth['attendant']}}</td><td> {{ birth['birth_month'] }}</td></tr>
-      {% endfor %}
-      </table>
-
-
-
-     </div><!-- /.container -->
-   -->
-
-    <div class="container">
-      <div class="starter-template">
-        <h3>Result is:</h3>
-        <p class="lead"><br>{{the_result}}</p>
-      </div>
-
-
-      <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-      <script src="static/js/bootstrap.min.js"></script>
-
-
-     </div><!-- /.container -->
-
-
-   <!-- Bootstrap core JavaScript
-   ================================================== -->
-   <!-- Placed at the end of the document so the pages load faster -->
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="static/js/bootstrap.min.js"></script>
    </body>
 </html>
